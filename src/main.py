@@ -1,12 +1,14 @@
-"""
+ 
+
+    """
 ScholarMind
 AI Research and Knowledge Management Project
 """
 
+from data_loader import load_research_data
 from knowledge import create_knowledge_item
 from memory import create_memory
 from graph import KnowledgeGraph
-from research import create_research_paper
 
 
 PROJECT_NAME = "ScholarMind"
@@ -17,65 +19,75 @@ def main():
     print(f"{PROJECT_NAME} v{VERSION}")
     print("AI Research and Knowledge Management Project")
 
-    # 1. Create research paper
-    paper = create_research_paper(
-        title="AI for Environmental Risk Assessment",
-        authors=["ScholarMind Research"],
-        year=2026,
-        method="Random Forest",
-        dataset="Environmental Sensor Data",
-        findings="AI can support environmental risk assessment."
+    # Load research data
+    papers = load_research_data(
+        "../data/sample_research.json"
     )
 
-    # 2. Create knowledge item
-    knowledge = create_knowledge_item(
-        title=paper.title,
-        knowledge_type="Research Paper",
-        description=paper.findings
-    )
-
-    # 3. Store knowledge in research memory
+    # Create research memory
     memory = create_memory()
-    memory.add(knowledge)
 
-    # 4. Create knowledge graph
+    # Create knowledge graph
     graph = KnowledgeGraph()
 
-    graph.add_node(
-        "paper_001",
-        "paper",
-        paper.title
-    )
+    for index, paper in enumerate(papers, start=1):
 
-    graph.add_node(
-        "method_001",
-        "method",
-        paper.method
-    )
+        # Convert research paper into knowledge
+        knowledge = create_knowledge_item(
+            title=paper.title,
+            knowledge_type="Research Paper",
+            description=paper.findings
+        )
 
-    graph.add_node(
-        "dataset_001",
-        "dataset",
-        paper.dataset
-    )
+        # Store in research memory
+        memory.add(knowledge)
 
-    graph.add_relationship(
-        "paper_001",
-        "uses",
-        "method_001"
-    )
+        # Create graph nodes
+        paper_id = f"paper_{index}"
+        method_id = f"method_{index}"
+        dataset_id = f"dataset_{index}"
 
-    graph.add_relationship(
-        "paper_001",
-        "uses",
-        "dataset_001"
-    )
+        graph.add_node(
+            paper_id,
+            "paper",
+            paper.title
+        )
+
+        graph.add_node(
+            method_id,
+            "method",
+            paper.method
+        )
+
+        graph.add_node(
+            dataset_id,
+            "dataset",
+            paper.dataset
+        )
+
+        # Create relationships
+        graph.add_relationship(
+            paper_id,
+            "uses",
+            method_id
+        )
+
+        graph.add_relationship(
+            paper_id,
+            "uses",
+            dataset_id
+        )
 
     print()
+    print("Research Papers:", len(papers))
     print("Research Memory:", memory.count(), "item(s)")
     print("Knowledge Graph Nodes:", graph.count_nodes())
-    print("Knowledge Graph Relationships:", graph.count_relationships())
+    print(
+        "Knowledge Graph Relationships:",
+        graph.count_relationships()
+    )
 
 
 if __name__ == "__main__":
     main()
+    
