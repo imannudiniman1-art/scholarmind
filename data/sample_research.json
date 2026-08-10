@@ -7,9 +7,17 @@
         "ScholarMind Research"
       ],
       "year": 2026,
-      "method": "Random Forest",
+      "doi": "10.1234/example.doi",
+      "abstract": "An example research paper for the ScholarMind prototype.",
+      "keywords": [
+        "artificial intelligence",
+        "environmental risk",
+        "machine learning"
+      ],
+      "methodology": "Comparative machine learning analysis",
       "dataset": "Environmental Sensor Data",
-      "findings": "AI can support environmental risk assessment."
+      "findings": "AI can support environmental risk assessment.",
+      "source": "ScholarMind Research Dataset"
     }
   ]
 }
