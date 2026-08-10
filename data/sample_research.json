@@ -1,0 +1,15 @@
+{
+  "papers": [
+    {
+      "id": "paper_001",
+      "title": "AI for Environmental Risk Assessment",
+      "authors": [
+        "ScholarMind Research"
+      ],
+      "year": 2026,
+      "method": "Random Forest",
+      "dataset": "Environmental Sensor Data",
+      "findings": "AI can support environmental risk assessment."
+    }
+  ]
+}
