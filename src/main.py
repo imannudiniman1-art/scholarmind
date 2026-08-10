@@ -1,6 +1,5 @@
- 
 
-    """
+"""
 ScholarMind
 AI Research and Knowledge Management Project
 """
@@ -12,52 +11,57 @@ from graph import KnowledgeGraph
 
 
 PROJECT_NAME = "ScholarMind"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 
 def main():
     print(f"{PROJECT_NAME} v{VERSION}")
     print("AI Research and Knowledge Management Project")
 
-    # Load research data
     papers = load_research_data(
         "../data/sample_research.json"
     )
 
-    # Create research memory
     memory = create_memory()
-
-    # Create knowledge graph
     graph = KnowledgeGraph()
 
     for index, paper in enumerate(papers, start=1):
 
-        # Convert research paper into knowledge
+        # Research Paper → Knowledge
         knowledge = create_knowledge_item(
             title=paper.title,
             knowledge_type="Research Paper",
             description=paper.findings
         )
 
-        # Store in research memory
         memory.add(knowledge)
 
-        # Create graph nodes
         paper_id = f"paper_{index}"
-        method_id = f"method_{index}"
-        dataset_id = f"dataset_{index}"
 
+        # Paper node
         graph.add_node(
             paper_id,
             "paper",
             paper.title
         )
 
+        # Methodology
+        methodology_id = f"methodology_{index}"
+
         graph.add_node(
-            method_id,
-            "method",
-            paper.method
+            methodology_id,
+            "methodology",
+            paper.methodology
         )
+
+        graph.add_relationship(
+            paper_id,
+            "uses",
+            methodology_id
+        )
+
+        # Dataset
+        dataset_id = f"dataset_{index}"
 
         graph.add_node(
             dataset_id,
@@ -65,18 +69,62 @@ def main():
             paper.dataset
         )
 
-        # Create relationships
-        graph.add_relationship(
-            paper_id,
-            "uses",
-            method_id
-        )
-
         graph.add_relationship(
             paper_id,
             "uses",
             dataset_id
         )
+
+        # Finding
+        finding_id = f"finding_{index}"
+
+        graph.add_node(
+            finding_id,
+            "finding",
+            paper.findings
+        )
+
+        graph.add_relationship(
+            paper_id,
+            "reports",
+            finding_id
+        )
+
+        # Source
+        source_id = f"source_{index}"
+
+        graph.add_node(
+            source_id,
+            "source",
+            paper.source
+        )
+
+        graph.add_relationship(
+            paper_id,
+            "has_source",
+            source_id
+        )
+
+        # Keywords
+        for keyword_index, keyword in enumerate(
+            paper.keywords,
+            start=1
+        ):
+            keyword_id = (
+                f"keyword_{index}_{keyword_index}"
+            )
+
+            graph.add_node(
+                keyword_id,
+                "keyword",
+                keyword
+            )
+
+            graph.add_relationship(
+                paper_id,
+                "has_keyword",
+                keyword_id
+            )
 
     print()
     print("Research Papers:", len(papers))
@@ -90,4 +138,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
