@@ -8,6 +8,7 @@ from data_loader import load_research_data
 from knowledge import create_knowledge_item
 from memory import create_memory
 from graph import KnowledgeGraph
+from query import search_papers
 
 
 PROJECT_NAME = "ScholarMind"
@@ -21,6 +22,17 @@ def main():
     papers = load_research_data(
         "../data/sample_research.json"
     )
+        # Research Query
+    results = search_papers(
+        papers,
+        "machine learning"
+    )
+
+    print()
+    print("Search Results:", len(results))
+
+    for paper in results:
+        print("-", paper.title)
 
     memory = create_memory()
     graph = KnowledgeGraph()
