@@ -7,7 +7,7 @@ from data_loader import load_research_data
 
 def test_load_research_data():
     papers = load_research_data(
-        "data/sample_research.json"
+        "../data/sample_research.json"
     )
 
     assert len(papers) == 1
