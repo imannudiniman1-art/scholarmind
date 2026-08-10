@@ -1,6 +1,6 @@
 """
 ScholarMind Knowledge Graph Module
-Initial implementation of knowledge relationships.
+Knowledge relationships for research information.
 """
 
 
