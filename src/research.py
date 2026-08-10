@@ -1,6 +1,6 @@
 """
 ScholarMind Research Module
-Initial representation of a research paper.
+Research paper representation.
 """
 
 
@@ -10,25 +10,37 @@ class ResearchPaper:
         title,
         authors=None,
         year=None,
-        method=None,
+        doi=None,
+        abstract=None,
+        keywords=None,
+        methodology=None,
         dataset=None,
-        findings=None
+        findings=None,
+        source=None
     ):
         self.title = title
         self.authors = authors or []
         self.year = year
-        self.method = method
+        self.doi = doi
+        self.abstract = abstract
+        self.keywords = keywords or []
+        self.methodology = methodology
         self.dataset = dataset
         self.findings = findings
+        self.source = source
 
     def summary(self):
         return {
             "title": self.title,
             "authors": self.authors,
             "year": self.year,
-            "method": self.method,
+            "doi": self.doi,
+            "abstract": self.abstract,
+            "keywords": self.keywords,
+            "methodology": self.methodology,
             "dataset": self.dataset,
-            "findings": self.findings
+            "findings": self.findings,
+            "source": self.source
         }
 
 
@@ -36,15 +48,23 @@ def create_research_paper(
     title,
     authors=None,
     year=None,
-    method=None,
+    doi=None,
+    abstract=None,
+    keywords=None,
+    methodology=None,
     dataset=None,
-    findings=None
+    findings=None,
+    source=None
 ):
     return ResearchPaper(
         title=title,
         authors=authors,
         year=year,
-        method=method,
+        doi=doi,
+        abstract=abstract,
+        keywords=keywords,
+        methodology=methodology,
         dataset=dataset,
-        findings=findings
+        findings=findings,
+        source=source
     )
