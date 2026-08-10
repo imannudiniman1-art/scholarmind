@@ -19,9 +19,13 @@ def load_research_data(file_path):
             title=item.get("title"),
             authors=item.get("authors"),
             year=item.get("year"),
-            method=item.get("method"),
+            doi=item.get("doi"),
+            abstract=item.get("abstract"),
+            keywords=item.get("keywords"),
+            methodology=item.get("methodology"),
             dataset=item.get("dataset"),
-            findings=item.get("findings")
+            findings=item.get("findings"),
+            source=item.get("source")
         )
 
         papers.append(paper)
