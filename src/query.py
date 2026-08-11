@@ -35,3 +35,36 @@ def search_papers(papers, query):
             results.append(paper)
 
     return results
+
+def find_related_knowledge(graph, paper_id,     relation=None):
+    """
+    Find knowledge connected to a research paper.
+
+    If relation is provided, only relationships
+    with that relation are returned.
+    """
+
+    results = []
+
+    for relationship in graph.get_relationships():
+
+        if relationship["source"] != paper_id:
+            continue
+
+        if relation is not None:
+            if relationship["relation"] != relation:
+                continue
+
+        target_id = relationship["target"]
+
+        node = graph.get_nodes().get(target_id)
+
+        if node is not None:
+            results.append({
+                "relation": relationship["relation"],
+                "id": target_id,
+                "type": node["type"],
+                "label": node["label"]
+            })
+
+    return results
