@@ -18,4 +18,4 @@ def test_core_process_returns_result():
 
     result = core.process("AI research")
 
-    assert result is not None
+    assert result is not None 
