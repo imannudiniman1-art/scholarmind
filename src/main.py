@@ -1,30 +1,33 @@
 
 """
 ScholarMind
-AI Research and Knowledge Management Project
+
+Main entry point for the ScholarMind
+research and knowledge management system.
 """
 
-from data_loader import load_research_data
-from knowledge import create_knowledge_item
-from memory import create_memory
-from graph import KnowledgeGraph
-from query import search_papers, find_related_knowledge
-from research_assistant import ask_about_paper
+from scholarmind import ScholarMind
+
 
 PROJECT_NAME = "ScholarMind"
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 
 def main():
     print(f"{PROJECT_NAME} v{VERSION}")
     print("AI Research and Knowledge Management Project")
 
-    papers = load_research_data(
+    scholar = ScholarMind(
         "../data/sample_research.json"
     )
-        # Research Query
-    results = search_papers(
-        papers,
+
+    papers = scholar.load_data()
+
+    print()
+    print("Research Papers:", len(papers))
+
+    # Search research knowledge
+    results = scholar.search(
         "machine learning"
     )
 
@@ -34,156 +37,25 @@ def main():
     for paper in results:
         print("-", paper.title)
 
-    memory = create_memory()
-    graph = KnowledgeGraph()
-
-    for index, paper in enumerate(papers, start=1):
-
-        # Research Paper → Knowledge
-        knowledge = create_knowledge_item(
-            title=paper.title,
-            knowledge_type="Research Paper",
-            description=paper.findings
-        )
-
-        memory.add(knowledge)
-
-        paper_id = f"paper_{index}"
-
-        # Paper node
-        graph.add_node(
-            paper_id,
-            "paper",
-            paper.title
-        )
-
-        # Methodology
-        methodology_id = f"methodology_{index}"
-
-        graph.add_node(
-            methodology_id,
-            "methodology",
-            paper.methodology
-        )
-
-        graph.add_relationship(
-            paper_id,
-            "uses",
-            methodology_id
-        )
-
-        # Dataset
-        dataset_id = f"dataset_{index}"
-
-        graph.add_node(
-            dataset_id,
-            "dataset",
-            paper.dataset
-        )
-
-        graph.add_relationship(
-            paper_id,
-            "uses",
-            dataset_id
-        )
-
-        # Finding
-        finding_id = f"finding_{index}"
-
-        graph.add_node(
-            finding_id,
-            "finding",
-            paper.findings
-        )
-
-        graph.add_relationship(
-            paper_id,
-            "reports",
-            finding_id
-        )
-
-        # Source
-        source_id = f"source_{index}"
-
-        graph.add_node(
-            source_id,
-            "source",
-            paper.source
-        )
-
-        graph.add_relationship(
-            paper_id,
-            "has_source",
-            source_id
-        )
-
-        # Keywords
-        for keyword_index, keyword in enumerate(
-            paper.keywords,
-            start=1
-        ):
-            keyword_id = (
-                f"keyword_{index}_{keyword_index}"
-            )
-
-            graph.add_node(
-                keyword_id,
-                "keyword",
-                keyword
-            )
-
-            graph.add_relationship(
-                paper_id,
-                "has_keyword",
-                keyword_id
-            )
-
-    # Knowledge Graph Query
-    related_knowledge = find_related_knowledge(
-        graph,
-        "paper_1"
-    )
+    # System status
+    status = scholar.status()
 
     print()
-    print("Related Knowledge:")
-
-    for item in related_knowledge:
-        print(
-            "-",
-            item["relation"],
-            "→",
-            item["type"],
-            ":",
-            item["label"]
-        )
-
-    print()
-    print("Research Papers:", len(papers))
-    print("Research Memory:", memory.count(), "item(s)")
-    print("Knowledge Graph Nodes:", graph.count_nodes())
+    print("ScholarMind Status:")
+    print("Papers:", status["papers"])
     print(
-        "Knowledge Graph Relationships:",
-        graph.count_relationships()
+        "Memory Items:",
+        status["memory_items"]
+    )
+    print(
+        "Graph Nodes:",
+        status["graph_nodes"]
+    )
+    print(
+        "Graph Relationships:",
+        status["graph_relationships"]
     )
 
 
 if __name__ == "__main__":
     main()
-
-
-
-    # Research Assistant
-    methodology_result = ask_about_paper(
-        graph,
-        "paper_1",
-        "methodology"
-    )
-
-    print()
-    print("Research Assistant:")
-    
-    for item in methodology_result:
-        print(
-            "Methodology:",
-            item["label"]
-        )
