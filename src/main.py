@@ -9,7 +9,7 @@ from knowledge import create_knowledge_item
 from memory import create_memory
 from graph import KnowledgeGraph
 from query import search_papers, find_related_knowledge
-
+from research_assistant import ask_about_paper
 
 PROJECT_NAME = "ScholarMind"
 VERSION = "0.2.0"
@@ -169,3 +169,21 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+    # Research Assistant
+    methodology_result = ask_about_paper(
+        graph,
+        "paper_1",
+        "methodology"
+    )
+
+    print()
+    print("Research Assistant:")
+    
+    for item in methodology_result:
+        print(
+            "Methodology:",
+            item["label"]
+        )
