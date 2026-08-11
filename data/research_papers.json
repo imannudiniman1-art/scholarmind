@@ -3,14 +3,23 @@
     {
       "id": "zenodo_18707122",
       "title": "Integration of AI and Geophysical Sensing for Environmental Risk Assessment",
-      "authors": [],
-      "year": null,
+      "authors": [
+        "Iman Imannudin, S.Si., M.Kom"
+      ],
+      "year": 2026,
       "doi": "10.5281/zenodo.18707122",
-      "abstract": "",
-      "keywords": [],
-      "methodology": "",
-      "dataset": "",
-      "findings": "",
+      "abstract": "The integration of artificial intelligence (AI) with geophysical sensing provides a scalable and data-driven solution for environmental risk assessment. This study presents a supervised machine learning framework designed to classify environmental risk levels (low, medium, and high) using statistical features extracted from simulated geophysical signals.",
+      "keywords": [
+        "Artificial Intelligence",
+        "Geophysical Sensing",
+        "Environmental Risk Assessment",
+        "Machine Learning",
+        "Random Forest",
+        "Signal Simulation"
+      ],
+      "methodology": "Synthetic geophysical signal simulation, statistical feature extraction using mean, standard deviation, and RMS, 70:30 stratified train-test split, optional SMOTE class balancing, and Random Forest classification.",
+      "dataset": "500 simulated geophysical signal samples with approximately balanced Low, Medium, and High risk classes.",
+      "findings": "The Random Forest model achieved approximately 76% accuracy on the reported testing dataset. The paper also reports accuracy exceeding 85% in balanced scenarios and above 90% in optimized configurations using data balancing techniques.",
       "source": "Zenodo"
     }
   ]
