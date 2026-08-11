@@ -9,7 +9,7 @@ designed to organize, connect, and retrieve scientific knowledge.
 
 The ScholarMind research workflow consists of several stages:
 
-```text
+'''text
 Research Data
       ↓
 Data Loader
@@ -38,10 +38,10 @@ Example metadata includes:
 -DOI
 -Abstract
 -Keywords
-Methodology
-Dataset
-Findings
-Source
+-Methodology
+-Dataset
+-Findings
+-Source
 
 2. Data Loader
 The data_loader.py module reads research metadata from JSON files and converts the data into ResearchPaper objects.
@@ -54,6 +54,7 @@ The memory module stores knowledge items generated from research information.
 
 5. Knowledge Graph
 The Knowledge Graph connects research entities and relationships.
+
 Example:
 Paper
  ├── uses → Methodology
@@ -61,6 +62,7 @@ Paper
  ├── reports → Finding
  ├── has_keyword → Keyword
  └── has_source → Source
+
 
 6. Research Query
 The query layer provides keyword-based retrieval from research papers.
@@ -70,12 +72,13 @@ The answer layer combines research search results and Knowledge Graph informatio
 
 8. Research Assistant
 The Research Assistant provides topic-oriented retrieval from the Knowledge Graph.
+
 Examples:
-Methodology
-Dataset
-Finding
-Source
-Keywords
+-Methodology
+-Dataset
+-Finding
+-Source
+-Keywords
 
 9. Testing
 Each major component is validated through automated tests.
