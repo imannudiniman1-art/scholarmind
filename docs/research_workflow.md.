@@ -1,0 +1,197 @@
+ScholarMind Research Workflow
+
+Overview
+
+ScholarMind is an AI-based research and knowledge management system designed to help researchers organize, search, connect, and retrieve research knowledge.
+
+The research workflow connects research data, papers, memory, knowledge graphs, search, retrieval, answers, and the research assistant into one integrated system.
+
+Research Workflow
+
+Research Data
+      ↓
+Data Loader
+      ↓
+Research Paper
+      ↓
+Research Memory
+      ↓
+Knowledge Graph
+      ↓
+ ┌───────────────┐
+ │ Search           │
+ │ Graph Retrieval. │
+ └───────┬───────┘
+         ↓
+   Answer Layer
+         ↓
+ Research Assistant
+         ↓
+ Research Knowledge
+
+1. Research Data
+
+Research data is the initial input for ScholarMind.
+
+The data may contain research papers, metadata, concepts, descriptions, and other research-related information.
+
+The purpose of this layer is to provide structured information that can be processed by the system.
+
+2. Data Loader
+
+The Data Loader reads research data and converts it into a form that can be processed by ScholarMind.
+
+Research Data → Data Loader → Research Papers
+
+This layer separates data loading from the rest of the application.
+
+3. Research Paper
+
+Research papers represent the primary research knowledge processed by ScholarMind.
+
+Each paper may contain information such as:
+
+- Paper ID
+- Title
+- Authors
+- Abstract
+- Research topic
+- Description
+- Metadata
+
+These research objects become the foundation for search and knowledge retrieval.
+
+4. Research Memory
+
+Research Memory stores knowledge items generated or collected during the research process.
+
+It allows ScholarMind to maintain a structured representation of research knowledge.
+
+Research Paper
+      ↓
+Research Memory
+      ↓
+Knowledge Items
+
+
+5. Knowledge Graph
+
+The Knowledge Graph represents relationships between research concepts, papers, and knowledge items.
+
+Instead of treating research information as isolated documents, ScholarMind can represent connections between entities.
+
+Paper
+  │
+  ├── relates to → Concept
+  │
+  ├── discusses → Topic
+  │
+  └── connected to → Research Knowledge
+
+This provides a foundation for graph-based retrieval.
+
+6. Text Search
+
+Text Search allows researchers to find relevant research papers using a query.
+
+Research Question
+       ↓
+   Text Search
+       ↓
+Relevant Papers
+
+The search layer provides a direct way to locate research information.
+
+7. Graph Retrieval
+
+Graph Retrieval uses relationships represented in the Knowledge Graph to retrieve connected research knowledge.
+
+Research Question
+       ↓
+Knowledge Graph
+       ↓
+Related Concepts
+       ↓
+Related Research
+
+This complements traditional text-based search.
+
+8. Answer Layer
+
+The Answer Layer combines available research information to produce an answer to a research question.
+
+Research Question
+       ↓
+Search + Graph Retrieval
+       ↓
+Relevant Research Knowledge
+       ↓
+Answer
+
+The goal is to provide answers based on the research knowledge available to ScholarMind.
+
+9. Research Assistant
+
+The Research Assistant provides a higher-level interface for interacting with research knowledge.
+
+It can use the underlying research graph and knowledge representation to help researchers explore specific papers and topics.
+
+Researcher
+    ↓
+Research Assistant
+    ↓
+Research Knowledge
+    ↓
+Answer / Exploration
+
+10. Integrated Research Workflow
+
+The complete ScholarMind workflow is:
+
+                  ScholarMind
+                      │
+              Research Data
+                      ↓
+                 Data Loader
+                      ↓
+                Research Paper
+                      ↓
+               Research Memory
+                      ↓
+               Knowledge Graph
+                  ↙       ↘
+            Text Search   Graph Retrieval
+                  ↘       ↙
+                 Answer Layer
+                      ↓
+              Research Assistant
+                      ↓
+             Research Knowledge
+
+This architecture allows ScholarMind to combine document-based search, structured memory, knowledge graphs, retrieval, and AI-assisted answers within a single research workflow.
+
+11. Design Principle
+
+ScholarMind is designed around the principle that research knowledge should not only be stored, but also connected, retrieved, and evolved.
+
+The system therefore separates the major functions while allowing them to interact through a common research knowledge layer.
+
+12. Current Development Status
+
+The current ScholarMind implementation includes:
+
+- Research Data
+- Data Loader
+- Research Paper
+- Research Memory
+- Knowledge Graph
+- Text Search
+- Graph Retrieval
+- Answer Layer
+- Research Assistant
+- Unit Testing
+- Integration Testing
+- End-to-End Testing
+- GitHub Actions Continuous Integration
+
+The project is being developed incrementally, with automated tests used to verify that new changes do not break existing functionality.
