@@ -8,7 +8,7 @@ from data_loader import load_research_data
 from knowledge import create_knowledge_item
 from memory import create_memory
 from graph import KnowledgeGraph
-from query import search_papers
+from query import search_papers, find_related_knowledge
 
 
 PROJECT_NAME = "ScholarMind"
@@ -137,6 +137,25 @@ def main():
                 "has_keyword",
                 keyword_id
             )
+
+    # Knowledge Graph Query
+    related_knowledge = find_related_knowledge(
+        graph,
+        "paper_1"
+    )
+
+    print()
+    print("Related Knowledge:")
+
+    for item in related_knowledge:
+        print(
+            "-",
+            item["relation"],
+            "→",
+            item["type"],
+            ":",
+            item["label"]
+        )
 
     print()
     print("Research Papers:", len(papers))
