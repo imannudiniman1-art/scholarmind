@@ -1,6 +1,5 @@
 """
 ScholarMind Research Assistant
-
 Provides simple research-oriented questions
 using the Knowledge Graph.
 """
