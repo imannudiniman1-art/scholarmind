@@ -12,6 +12,7 @@ from query import search_papers
 from answer import answer_question
 from research_assistant import ask_about_paper
 from graph_ingestion import ingest_paper
+from answer_generator import generate_answer
 
 class ScholarMind:
     def __init__(self, data_path):
@@ -72,4 +73,21 @@ class ScholarMind:
             "graph_relationships": (
                 self.graph.count_relationships()
             )
+
+   def answer_question(self, paper_id, question):
+
+    """
+    Answer a natural-language research question
+    about a specific paper.
+    """
+
+    results = self.ask_about_paper(
+        paper_id,
+        question
+    )
+
+    return generate_answer(
+        question,
+        results
+    )
         }
