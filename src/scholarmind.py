@@ -11,7 +11,7 @@ from graph import KnowledgeGraph
 from query import search_papers
 from answer import answer_question
 from research_assistant import ask_about_paper
-
+from graph_ingestion import ingest_paper
 
 class ScholarMind:
     def __init__(self, data_path):
@@ -22,11 +22,23 @@ class ScholarMind:
         self.graph = KnowledgeGraph()
 
     def load_data(self):
-        self.papers = load_research_data(
-            self.data_path
+    self.papers = load_research_data(
+        self.data_path
+    )
+
+    for index, paper in enumerate(self.papers):
+        paper_id = paper.doi
+
+        if not paper_id:
+            paper_id = f"paper_{index}"
+
+        ingest_paper(
+            self.graph,
+            paper,
+            paper_id
         )
 
-        return self.papers
+    return self.papers
 
     def search(self, query):
         return search_papers(
