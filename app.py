@@ -113,92 +113,105 @@ if st.button("Ask ScholarMind", type="primary"):
                     if isinstance(result, dict)
                     else result
                 )
-# =================================================
-# QUESTION TYPE
-# =================================================
 
-question_lower = question.lower()
 
-if (
-    "artificial intelligence" in question_lower
-    or "machine learning" in question_lower
-    or "deep learning" in question_lower
-    or " ai " in f" {question_lower} "
-):
 
-    display_field = "ai_methods"
-    display_label = "AI Methods"
+                # -------------------------------------------------
+                # Extract answer
+                # -------------------------------------------------
 
-elif (
-    "author" in question_lower
-    or "authors" in question_lower
-):
+                answer = result.get(
+                    "answer",
+                    result
+                )
 
-    display_field = "authors"
-    display_label = "Authors"
 
-elif (
-    "methodology" in question_lower
-    or "method" in question_lower
-    or "technique" in question_lower
-):
+                # =================================================
+                # QUESTION TYPE
+                # =================================================
 
-    display_field = "methodology"
-    display_label = "Methodology"
+                question_lower = question.lower()
 
-elif (
-    "dataset" in question_lower
-    or "data" in question_lower
-):
+                if (
+                    "artificial intelligence" in question_lower
+                    or "machine learning" in question_lower
+                    or "deep learning" in question_lower
+                    or " ai " in f" {question_lower} "
+                ):
 
-    display_field = "dataset"
-    display_label = "Dataset"
+                    display_field = "ai_methods"
+                    display_label = "AI Methods"
 
-elif (
-    "finding" in question_lower
-    or "findings" in question_lower
-    or "result" in question_lower
-    or "results" in question_lower
-    or "conclusion" in question_lower
-):
+                elif (
+                    "author" in question_lower
+                    or "authors" in question_lower
+                ):
 
-    display_field = "findings"
-    display_label = "Findings"
+                    display_field = "authors"
+                    display_label = "Authors"
 
-elif "doi" in question_lower:
+                elif (
+                    "methodology" in question_lower
+                    or "method" in question_lower
+                    or "technique" in question_lower
+                ):
 
-    display_field = "doi"
-    display_label = "DOI"
+                    display_field = "methodology"
+                    display_label = "Methodology"
 
-elif (
-    "year" in question_lower
-    or "when" in question_lower
-    or "published" in question_lower
-):
+                elif (
+                    "dataset" in question_lower
+                    or "data" in question_lower
+                ):
 
-    display_field = "year"
-    display_label = "Year"
+                    display_field = "dataset"
+                    display_label = "Dataset"
 
-elif (
-    "abstract" in question_lower
-    or "summary" in question_lower
-):
+                elif (
+                    "finding" in question_lower
+                    or "findings" in question_lower
+                    or "result" in question_lower
+                    or "results" in question_lower
+                    or "conclusion" in question_lower
+                ):
 
-    display_field = "abstract"
-    display_label = "Abstract"
+                    display_field = "findings"
+                    display_label = "Findings"
 
-elif (
-    "source" in question_lower
-    or "repository" in question_lower
-):
+                elif "doi" in question_lower:
 
-    display_field = "source"
-    display_label = "Source"
+                    display_field = "doi"
+                    display_label = "DOI"
 
-else:
+                elif (
+                    "year" in question_lower
+                    or "when" in question_lower
+                    or "published" in question_lower
+                ):
 
-    display_field = None
-    display_label = None
+                    display_field = "year"
+                    display_label = "Year"
+
+                elif (
+                    "abstract" in question_lower
+                    or "summary" in question_lower
+                ):
+
+                    display_field = "abstract"
+                    display_label = "Abstract"
+
+                elif (
+                    "source" in question_lower
+                    or "repository" in question_lower
+                ):
+
+                    display_field = "source"
+                    display_label = "Source"
+
+                else:
+
+                    display_field = None
+                    display_label = None
 
                 # =================================================
                 # ERROR RESULT
