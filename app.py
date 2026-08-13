@@ -78,7 +78,7 @@ question = st.text_area(
 # ASK BUTTON
 # =========================================================
 
-if st.button("Ask ScholarMind", type="primary"):
+   if st.button("Ask ScholarMind", type="primary"):
 
     if not question.strip():
 
@@ -214,7 +214,7 @@ if st.button("Ask ScholarMind", type="primary"):
 # =================================================
 # GET DISPLAY VALUE
 # =================================================
-if display_field == "ai_methods":
+    if display_field == "ai_methods":
 
     ai_methods = paper.get("ai_methods")
 
@@ -241,7 +241,7 @@ if display_field == "ai_methods":
         else:
             display_value = "N/A"
 
-else:
+        else:
 
     display_value = paper.get(
         display_field,
