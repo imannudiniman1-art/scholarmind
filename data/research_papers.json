@@ -1,49 +1,46 @@
-{
-  "papers": [
-    {
-      "id": "zenodo_18707122",
-      "title": "Integration of AI and Geophysical Sensing for Environmental Risk Assessment",
-      "authors": [
-        "Iman Imannudin, S.Si., M.Kom"
-      ],
-      "year": 2026,
-      "doi": "10.5281/zenodo.18707122",
-      "abstract": "The integration of artificial intelligence (AI) with geophysical sensing provides a scalable and data-driven solution for environmental risk assessment. This study presents a supervised machine learning framework designed to classify environmental risk levels (low, medium, and high) using statistical features extracted from simulated geophysical signals.",
-      "keywords": [
-        "Artificial Intelligence",
-        "Geophysical Sensing",
-        "Environmental Risk Assessment",
-        "Machine Learning",
-        "Random Forest",
-        "Signal Simulation"
-      ],
-      "methodology": "Synthetic geophysical signal simulation, statistical feature extraction using mean, standard deviation, and RMS, 70:30 stratified train-test split, optional SMOTE class balancing, and Random Forest classification.",
-      "dataset": "500 simulated geophysical signal samples with approximately balanced Low, Medium, and High risk classes.",
-      "findings": "The Random Forest model achieved approximately 76% accuracy on the reported testing dataset. The paper also reports accuracy exceeding 85% in balanced scenarios and above 90% in optimized configurations using data balancing techniques.",
-      "source": "Zenodo"
-    }
-  ]
-},
-{
-  "id": "zenodo_18276886",
-  "title": "Artificial Intelligence and Satellite-Based Infrastructure for Environmental Sustainability: Opportunities in the Context of Global Technology Ecosystems",
-  "authors": [
-    "Iman Imannudin, S.Si., M.Kom"
-  ],
-  "year": 2026,
-  "doi": "10.5281/zenodo.18276886",
-  "abstract": "The integration of artificial intelligence (AI), satellite-based communication infrastructure, and renewable energy systems represents a critical technological pathway toward achieving long-term environmental sustainability. Advances in low Earth orbit (LEO) satellite networks, intelligent energy management systems, and AI-driven analytics have enabled new approaches to environmental monitoring, risk assessment, and sustainable resource optimization. This paper explores a conceptual and simulation-based framework for applying AI-enabled satellite infrastructure to environmental sustainability challenges in Indonesia.",
-  "keywords": [
-    "Artificial Intelligence",
-    "Environmental Sustainability",
-    "Satellite Infrastructure",
-    "Renewable Energy",
-    "Environmental Risk Assessment",
-    "Indonesia"
-  ],
-
-  "methodology": "A conceptual and simulation-based framework using MATLAB-generated synthetic environmental data and a supervised artificial neural network (ANN) model. The workflow includes synthetic data generation, data normalization, ANN training and validation, and performance evaluation using mean squared error (MSE).",
-  "dataset": "Simulated environmental data generated using MATLAB, representing remote Indonesian environmental conditions. Variables include surface temperature variation, atmospheric CO2 concentration, energy consumption patterns, and renewable energy availability indicators.",
-  "findings": "The ANN model effectively captures nonlinear relationships among environmental variables and achieves low prediction error in the simulation. The results indicate the feasibility and scalability of AI-driven environmental risk assessment using satellite-derived environmental indicators under simulated conditions.",
-  "source": "Zenodo"
-}
+[
+  {
+    "id": "zenodo_18707122",
+    "title": "Integration of AI and Geophysical Sensing for Environmental Risk Assessment",
+    "authors": [
+      "Iman Imannudin, S.Si., M.Kom"
+    ],
+    "year": 2026,
+    "doi": "10.5281/zenodo.18707122",
+    "abstract": "The integration of artificial intelligence (AI) with geophysical sensing provides a scalable and data-driven solution for environmental risk assessment. This study presents a supervised machine learning framework designed to classify environmental risk levels (low, medium, and high) using statistical features extracted from simulated geophysical signals.",
+    "keywords": [
+      "Artificial Intelligence",
+      "Geophysical Sensing",
+      "Environmental Risk Assessment",
+      "Machine Learning",
+      "Random Forest",
+      "Signal Simulation"
+    ],
+    "methodology": "Synthetic geophysical signal simulation, statistical feature extraction using mean, standard deviation, and RMS, 70:30 stratified train-test split, optional SMOTE class balancing, and Random Forest classification.",
+    "dataset": "500 simulated geophysical signal samples with approximately balanced Low, Medium, and High risk classes.",
+    "findings": "The Random Forest model achieved approximately 76% accuracy on the reported testing dataset. The paper also reports accuracy exceeding 85% in balanced scenarios and above 90% in optimized configurations using data balancing techniques.",
+    "source": "Zenodo"
+  },
+  {
+    "id": "zenodo_18276886",
+    "title": "Artificial Intelligence and Satellite-Based Infrastructure for Environmental Sustainability: Opportunities in the Context of Global Technology Ecosystems",
+    "authors": [
+      "Iman Imannudin, S.Si., M.Kom"
+    ],
+    "year": 2026,
+    "doi": "10.5281/zenodo.18276886",
+    "abstract": "The integration of artificial intelligence (AI), satellite-based communication infrastructure, and renewable energy systems represents a critical technological pathway toward achieving long-term environmental sustainability. Advances in low Earth orbit (LEO) satellite networks, intelligent energy management systems, and AI-driven analytics have enabled new approaches to environmental monitoring, risk assessment, and sustainable resource optimization. This paper explores a conceptual and simulation-based framework for applying AI-enabled satellite infrastructure to environmental sustainability challenges in Indonesia.",
+    "keywords": [
+      "Artificial Intelligence",
+      "Environmental Sustainability",
+      "Satellite Infrastructure",
+      "Renewable Energy",
+      "Environmental Risk Assessment",
+      "Indonesia"
+    ],
+    "methodology": "A conceptual and simulation-based framework using MATLAB-generated synthetic environmental data and a supervised artificial neural network (ANN) model. The workflow includes synthetic data generation, data normalization, ANN training and validation, and performance evaluation using mean squared error (MSE).",
+    "dataset": "Simulated environmental data generated using MATLAB, representing remote Indonesian environmental conditions. Variables include surface temperature variation, atmospheric CO2 concentration, energy consumption patterns, and renewable energy availability indicators.",
+    "findings": "The ANN model effectively captures nonlinear relationships among environmental variables and achieves low prediction error in the simulation. The results indicate the feasibility and scalability of AI-driven environmental risk assessment using satellite-derived environmental indicators under simulated conditions.",
+    "source": "Zenodo"
+  }
+]
