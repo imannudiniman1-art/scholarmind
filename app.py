@@ -27,6 +27,144 @@ with open(DATA_FILE, "r", encoding="utf-8") as file:
 papers = data["papers"]
 
 
+
+# ---------------------------------------------------------
+# Streamlit Page Configuration
+# ---------------------------------------------------------
+
+st.set_page_config(
+    page_title="ScholarMind",
+    page_icon="🧠",
+    layout="wide"
+)
+
+st.title("🧠 ScholarMind")
+st.subheader("AI Research and Knowledge Management Assistant")
+
+st.markdown(
+    """
+    ScholarMind helps researchers explore scientific knowledge,
+    connect research information, and retrieve relevant insights.
+    """
+)
+
+st.divider()
+
+
+# ---------------------------------------------------------
+# Research Statistics
+# ---------------------------------------------------------
+
+st.markdown("### 📚 Research Knowledge Base")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Research Papers",
+        len(data)
+    )
+
+with col2:
+    st.metric(
+        "Knowledge Status",
+        "Ready"
+    )
+
+with col3:
+    st.metric(
+        "Assistant",
+        "Online"
+    )
+
+
+st.divider()
+
+
+# ---------------------------------------------------------
+# Research Assistant
+# ---------------------------------------------------------
+
+st.markdown("### 🔎 Ask ScholarMind")
+
+question = st.text_area(
+    "Ask a research question",
+    placeholder=(
+        "Example: What are the main methodologies "
+        "used in these research papers?"
+    ),
+    height=120
+)
+
+
+if st.button("Ask ScholarMind", type="primary"):
+
+    if not question.strip():
+
+        st.warning("Please enter a research question.")
+
+    else:
+
+        with st.spinner("ScholarMind is analyzing the research knowledge..."):
+
+            try:
+
+                answer = unified_assistant(
+                    question,
+                    data
+                )
+
+                st.markdown("### 💡 ScholarMind Answer")
+
+                st.write(answer)
+
+            except Exception as e:
+
+                st.error(
+                    f"ScholarMind encountered an error: {e}"
+                )
+
+
+st.divider()
+
+
+# ---------------------------------------------------------
+# Research Papers
+# ---------------------------------------------------------
+
+with st.expander("📖 View Research Knowledge Base"):
+
+    for i, paper in enumerate(data, start=1):
+
+        st.markdown(f"#### {i}. {paper.get('title', 'Untitled Research')}")
+
+        authors = paper.get("authors", [])
+
+        if isinstance(authors, list):
+            authors = ", ".join(authors)
+
+        st.write(f"**Authors:** {authors}")
+
+        if paper.get("year"):
+            st.write(f"**Year:** {paper.get('year')}")
+
+        if paper.get("doi"):
+            st.write(f"**DOI:** {paper.get('doi')}")
+
+        if paper.get("abstract"):
+            st.write(f"**Abstract:** {paper.get('abstract')}")
+
+        st.divider()
+
+
+# ---------------------------------------------------------
+# Footer
+# ---------------------------------------------------------
+
+st.caption(
+    "ScholarMind — AI Research and Knowledge Management Project"
+)
+
 # Page configuration
 st.set_page_config(
     page_title="ScholarMind",
