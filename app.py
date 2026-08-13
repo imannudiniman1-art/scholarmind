@@ -78,7 +78,7 @@ question = st.text_area(
 # ASK BUTTON
 # =========================================================
 
-   if st.button("Ask ScholarMind", type="primary"):
+    if st.button("Ask ScholarMind", type="primary"):
 
     if not question.strip():
 
@@ -103,9 +103,8 @@ question = st.text_area(
                 result_type = result.get(
                     "type",
                     "unknown"
-                ) if isinstance(result, dict) else "text"
-
-                answer = (
+                ) 
+                if isinstance(result, dict) else "text" answer = (
                     result.get("answer", result)
                     if isinstance(result, dict)
                     else result
