@@ -53,7 +53,58 @@ def _answer_cross_paper_question(papers, question):
 
     q = question.lower()
 
+    #
+
+    #
+
+
+ -----------------------------------------------------
+    # Artificial Intelligence / AI
     # -----------------------------------------------------
+
+    if (
+        "artificial intelligence" in q
+        or "artificial intelligence" in q
+        or " ai " in f" {q} "
+        or "machine learning" in q
+        or "deep learning" in q
+    ):
+
+        results = []
+
+        for paper in papers:
+
+            ai_used = paper.get("ai_used", False)
+
+            if ai_used:
+
+                results.append(
+                    {
+                        "title": paper.get(
+                            "title",
+                            "Untitled Research"
+                        ),
+                        "doi": paper.get(
+                            "doi",
+                            "N/A"
+                        ),
+                        "ai_methods": paper.get(
+                            "ai_methods",
+                            []
+                        ),
+                        "methodology": paper.get(
+                            "methodology",
+                            "Not specified"
+                        )
+                    }
+                )
+
+        return {
+            "type": "artificial_intelligence",
+            "answer": results,
+        }
+
+ -----------------------------------------------------
     # Methodology
     # -----------------------------------------------------
 
