@@ -47,70 +47,25 @@ else:
 
 
 # =========================================================
-# STREAMLIT CONFIGURATION
-# =========================================================
-
-st.set_page_config(
-    page_title="ScholarMind",
-    page_icon="🧠",
-    layout="wide"
-)
-
-
-# =========================================================
 # HEADER
 # =========================================================
 
-st.title("🧠 ScholarMind")
-st.subheader("AI Research and Knowledge Management Assistant")
+st.title("🔎 Ask ScholarMind")
 
 st.markdown(
-    """
-    ScholarMind helps researchers explore scientific knowledge,
-    connect research information, and retrieve relevant insights.
-    """
+    "Ask questions about the research papers in the ScholarMind "
+    "knowledge base."
 )
-
-st.divider()
-
-
-# =========================================================
-# RESEARCH KNOWLEDGE BASE
-# =========================================================
-
-st.markdown("### 📚 Research Knowledge Base")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric(
-        "Research Papers",
-        len(papers)
-    )
-
-with col2:
-    st.metric(
-        "Knowledge Status",
-        "Ready"
-    )
-
-with col3:
-    st.metric(
-        "Assistant",
-        "Online"
-    )
-
-st.divider()
 
 
 # =========================================================
 # ASK SCHOLARMIND
 # =========================================================
 
-st.markdown("### 🔎 Ask ScholarMind")
+st.markdown("### Ask a research question")
 
 question = st.text_area(
-    "Ask a research question",
+    "",
     placeholder=(
         "Example: What are the main methodologies "
         "used in these research papers?"
@@ -142,18 +97,37 @@ if st.button("Ask ScholarMind", type="primary"):
                     question
                 )
 
-                st.markdown("### 💡 ScholarMind Answer")
+                st.markdown("## 💡 ScholarMind Answer")
 
-                # -------------------------------------------------
-                # Determine question type
-                # -------------------------------------------------
+                # =================================================
+                # RESULT TYPE
+                # =================================================
+
+                result_type = result.get(
+                    "type",
+                    "unknown"
+                ) if isinstance(result, dict) else "text"
+
+                answer = (
+                    result.get("answer", result)
+                    if isinstance(result, dict)
+                    else result
+                )
+
+
+                # =================================================
+                # QUESTION TYPE
+                # =================================================
 
                 question_lower = question.lower()
 
-                if "dataset" in question_lower or "data" in question_lower:
+                if (
+                    "author" in question_lower
+                    or "authors" in question_lower
+                ):
 
-                    display_field = "dataset"
-                    display_label = "Dataset"
+                    display_field = "authors"
+                    display_label = "Authors"
 
                 elif (
                     "methodology" in question_lower
@@ -165,8 +139,18 @@ if st.button("Ask ScholarMind", type="primary"):
                     display_label = "Methodology"
 
                 elif (
+                    "dataset" in question_lower
+                    or "data" in question_lower
+                ):
+
+                    display_field = "dataset"
+                    display_label = "Dataset"
+
+                elif (
                     "finding" in question_lower
+                    or "findings" in question_lower
                     or "result" in question_lower
+                    or "results" in question_lower
                     or "conclusion" in question_lower
                 ):
 
@@ -179,12 +163,29 @@ if st.button("Ask ScholarMind", type="primary"):
                     display_label = "DOI"
 
                 elif (
-                    "author" in question_lower
-                    or "authors" in question_lower
+                    "year" in question_lower
+                    or "when" in question_lower
+                    or "published" in question_lower
                 ):
 
-                    display_field = "authors"
-                    display_label = "Authors"
+                    display_field = "year"
+                    display_label = "Year"
+
+                elif (
+                    "abstract" in question_lower
+                    or "summary" in question_lower
+                ):
+
+                    display_field = "abstract"
+                    display_label = "Abstract"
+
+                elif (
+                    "source" in question_lower
+                    or "repository" in question_lower
+                ):
+
+                    display_field = "source"
+                    display_label = "Source"
 
                 else:
 
@@ -192,28 +193,36 @@ if st.button("Ask ScholarMind", type="primary"):
                     display_label = None
 
 
-                # -------------------------------------------------
-                # Extract answer
-                # -------------------------------------------------
+                # =================================================
+                # ERROR RESULT
+                # =================================================
 
-                answer = result.get("answer", result)
+                if result_type == "error":
+
+                    st.error(answer)
 
 
-                # -------------------------------------------------
+                # =================================================
                 # LIST OF PAPERS
-                # -------------------------------------------------
+                # =================================================
 
-                if isinstance(answer, list):
+                elif isinstance(answer, list):
 
                     st.write(
-                        f"**{len(answer)} relevant research paper(s) found.**"
+                        f"**{len(answer)} relevant research "
+                        f"paper(s) found.**"
                     )
 
-                    for i, paper in enumerate(answer, start=1):
+                    for i, paper in enumerate(
+                        answer,
+                        start=1
+                    ):
 
                         if not isinstance(paper, dict):
+
                             st.write(paper)
                             continue
+
 
                         title = paper.get(
                             "title",
@@ -224,16 +233,18 @@ if st.button("Ask ScholarMind", type="primary"):
                             f"### 📄 {i}. {title}"
                         )
 
+
                         # DOI
 
                         if paper.get("doi"):
 
                             st.write(
-                                f"**DOI:** {paper.get('doi')}"
+                                f"**DOI:** "
+                                f"{paper.get('doi')}"
                             )
 
 
-                        # Selected information
+                        # Requested field
 
                         if display_field:
 
@@ -250,38 +261,75 @@ if st.button("Ask ScholarMind", type="primary"):
                                 )
 
                             st.write(
-                                f"**{display_label}:** {value}"
+                                f"**{display_label}:** "
+                                f"{value}"
                             )
+
+
+                        # General question
 
                         else:
 
-                            # General question:
-                            # show useful research information
+                            if paper.get("authors"):
+
+                                authors = paper.get(
+                                    "authors"
+                                )
+
+                                if isinstance(
+                                    authors,
+                                    list
+                                ):
+
+                                    authors = ", ".join(
+                                        str(author)
+                                        for author in authors
+                                    )
+
+                                st.write(
+                                    f"**Authors:** "
+                                    f"{authors}"
+                                )
+
+
+                            if paper.get("year"):
+
+                                st.write(
+                                    f"**Year:** "
+                                    f"{paper.get('year')}"
+                                )
+
 
                             if paper.get("methodology"):
+
                                 st.write(
                                     f"**Methodology:** "
                                     f"{paper.get('methodology')}"
                                 )
 
+
                             if paper.get("dataset"):
+
                                 st.write(
                                     f"**Dataset:** "
                                     f"{paper.get('dataset')}"
                                 )
 
+
                             if paper.get("findings"):
+
                                 st.write(
                                     f"**Findings:** "
                                     f"{paper.get('findings')}"
                                 )
 
+
                         st.divider()
 
 
-                # -------------------------------------------------
+                # =================================================
                 # SINGLE PAPER
-                # -------------------------------------------------
+                # =================================================
 
                 elif isinstance(answer, dict):
 
@@ -294,10 +342,12 @@ if st.button("Ask ScholarMind", type="primary"):
                         f"### 📄 {title}"
                     )
 
+
                     if answer.get("doi"):
 
                         st.write(
-                            f"**DOI:** {answer.get('doi')}"
+                            f"**DOI:** "
+                            f"{answer.get('doi')}"
                         )
 
 
@@ -316,33 +366,69 @@ if st.button("Ask ScholarMind", type="primary"):
                             )
 
                         st.write(
-                            f"**{display_label}:** {value}"
+                            f"**{display_label}:** "
+                            f"{value}"
                         )
 
                     else:
 
+                        if answer.get("authors"):
+
+                            authors = answer.get(
+                                "authors"
+                            )
+
+                            if isinstance(
+                                authors,
+                                list
+                            ):
+
+                                authors = ", ".join(
+                                    str(author)
+                                    for author in authors
+                                )
+
+                            st.write(
+                                f"**Authors:** "
+                                f"{authors}"
+                            )
+
+
+                        if answer.get("year"):
+
+                            st.write(
+                                f"**Year:** "
+                                f"{answer.get('year')}"
+                            )
+
+
                         if answer.get("methodology"):
+
                             st.write(
                                 f"**Methodology:** "
                                 f"{answer.get('methodology')}"
                             )
 
+
                         if answer.get("dataset"):
+
                             st.write(
                                 f"**Dataset:** "
                                 f"{answer.get('dataset')}"
                             )
 
+
                         if answer.get("findings"):
+
                             st.write(
                                 f"**Findings:** "
                                 f"{answer.get('findings')}"
                             )
 
 
-                # -------------------------------------------------
+                # =================================================
                 # TEXT ANSWER
-                # -------------------------------------------------
+                # =================================================
 
                 else:
 
@@ -356,77 +442,97 @@ if st.button("Ask ScholarMind", type="primary"):
                 )
 
 
-st.divider()
-
-
 # =========================================================
 # RESEARCH KNOWLEDGE BASE
 # =========================================================
 
-with st.expander("📖 View Research Knowledge Base"):
+st.divider()
 
-    for i, paper in enumerate(papers, start=1):
+with st.expander(
+    "📖 View Research Knowledge Base"
+):
+
+    for i, paper in enumerate(
+        papers,
+        start=1
+    ):
 
         if not isinstance(paper, dict):
             continue
 
+
         st.markdown(
-            f"#### {i}. "
+            f"### {i}. "
             f"{paper.get('title', 'Untitled Research')}"
         )
 
-        authors = paper.get("authors", [])
 
-        if isinstance(authors, list):
+        authors = paper.get(
+            "authors",
+            []
+        )
+
+        if isinstance(
+            authors,
+            list
+        ):
+
             authors = ", ".join(
-                str(author) for author in authors
+                str(author)
+                for author in authors
             )
 
         st.write(
             f"**Authors:** {authors}"
         )
 
+
         if paper.get("year"):
+
             st.write(
-                f"**Year:** {paper.get('year')}"
+                f"**Year:** "
+                f"{paper.get('year')}"
             )
+
 
         if paper.get("doi"):
+
             st.write(
-                f"**DOI:** {paper.get('doi')}"
+                f"**DOI:** "
+                f"{paper.get('doi')}"
             )
 
+
         if paper.get("methodology"):
+
             st.write(
                 f"**Methodology:** "
                 f"{paper.get('methodology')}"
             )
 
+
         if paper.get("dataset"):
+
             st.write(
                 f"**Dataset:** "
                 f"{paper.get('dataset')}"
             )
 
+
         if paper.get("findings"):
+
             st.write(
                 f"**Findings:** "
                 f"{paper.get('findings')}"
             )
 
+
         if paper.get("abstract"):
+
             st.write(
                 f"**Abstract:** "
                 f"{paper.get('abstract')}"
             )
 
-        st.divider()
 
-
-# =========================================================
-# FOOTER
-# =========================================================
-
-st.caption(
-    "ScholarMind — AI Research and Knowledge Management Project"
-)
+       
