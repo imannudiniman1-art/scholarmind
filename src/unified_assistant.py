@@ -23,6 +23,7 @@ def _paper_text(paper):
     """
     Combine searchable research fields into one text.
     """
+
     fields = [
         paper.get("title", ""),
         paper.get("abstract", ""),
@@ -38,7 +39,9 @@ def _paper_text(paper):
 
     for value in fields:
         if isinstance(value, list):
-            text_parts.append(" ".join(str(x) for x in value))
+            text_parts.append(
+                " ".join(str(x) for x in value)
+            )
         else:
             text_parts.append(str(value))
 
@@ -53,30 +56,40 @@ def _answer_cross_paper_question(papers, question):
 
     q = question.lower()
 
-    #
-
-    #
-
-
- -----------------------------------------------------
+    # -----------------------------------------------------
     # Artificial Intelligence / AI
     # -----------------------------------------------------
 
     if (
         "artificial intelligence" in q
-        or "artificial intelligence" in q
-        or " ai " in f" {q} "
         or "machine learning" in q
         or "deep learning" in q
+        or " ai " in f" {q} "
     ):
 
         results = []
 
         for paper in papers:
 
-            ai_used = paper.get("ai_used", False)
+            searchable = _paper_text(paper)
 
-            if ai_used:
+            # Detect AI from the actual research information
+            ai_keywords = [
+                "artificial intelligence",
+                "machine learning",
+                "deep learning",
+                "random forest",
+                "neural network",
+                "supervised learning",
+                "classification",
+            ]
+
+            ai_detected = any(
+                keyword in searchable
+                for keyword in ai_keywords
+            )
+
+            if ai_detected:
 
                 results.append(
                     {
@@ -88,14 +101,14 @@ def _answer_cross_paper_question(papers, question):
                             "doi",
                             "N/A"
                         ),
-                        "ai_methods": paper.get(
-                            "ai_methods",
-                            []
-                        ),
                         "methodology": paper.get(
                             "methodology",
                             "Not specified"
-                        )
+                        ),
+                        "keywords": paper.get(
+                            "keywords",
+                            []
+                        ),
                     }
                 )
 
@@ -104,7 +117,7 @@ def _answer_cross_paper_question(papers, question):
             "answer": results,
         }
 
- -----------------------------------------------------
+    # -----------------------------------------------------
     # Methodology
     # -----------------------------------------------------
 
@@ -290,6 +303,7 @@ def _answer_cross_paper_question(papers, question):
         )
 
         if score > 0:
+
             matched.append(
                 (
                     score,
