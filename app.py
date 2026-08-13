@@ -1,5 +1,7 @@
- 
- 
+"""
+ScholarMind Demo Application
+"""
+
 import json
 import sys
 from pathlib import Path
@@ -7,79 +9,119 @@ from pathlib import Path
 import streamlit as st
 
 
-# Path
+# =========================================================
+# PATH CONFIGURATION
+# =========================================================
+
 ROOT_DIR = Path(__file__).resolve().parent
 SRC_DIR = ROOT_DIR / "src"
 
 sys.path.insert(0, str(SRC_DIR))
 
 
-# Import ScholarMind
+# =========================================================
+# IMPORT SCHOLARMIND
+# =========================================================
+
 from unified_assistant import unified_assistant
 
 
-# Load data
+# =========================================================
+# LOAD RESEARCH DATA
+# =========================================================
+
 DATA_FILE = ROOT_DIR / "data" / "research_papers.json"
 
 with open(DATA_FILE, "r", encoding="utf-8") as file:
     data = json.load(file)
 
 
-# Get papers
+# Support both:
+# 1. JSON list
+# 2. JSON object containing "papers"
+
 if isinstance(data, dict):
     papers = data.get("papers", [])
 else:
     papers = data
 
 
-# Page
+# =========================================================
+# STREAMLIT CONFIGURATION
+# =========================================================
+
 st.set_page_config(
     page_title="ScholarMind",
     page_icon="🧠",
-    layout="centered"
+    layout="wide"
 )
 
 
-# Header
+# =========================================================
+# HEADER
+# =========================================================
+
 st.title("🧠 ScholarMind")
-st.subheader("AI Research & Knowledge Assistant")
+st.subheader("AI Research and Knowledge Management Assistant")
 
-st.write(
-    "Ask questions about research papers "
-    "and explore scientific knowledge."
+st.markdown(
+    """
+    ScholarMind helps researchers explore scientific knowledge,
+    connect research information, and retrieve relevant insights.
+    """
 )
-
 
 st.divider()
 
 
-# Statistics
+# =========================================================
+# RESEARCH KNOWLEDGE BASE
+# =========================================================
+
 st.markdown("### 📚 Research Knowledge Base")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric("Research Papers", len(papers))
+    st.metric(
+        "Research Papers",
+        len(papers)
+    )
 
 with col2:
-    st.metric("Knowledge Status", "Ready")
+    st.metric(
+        "Knowledge Status",
+        "Ready"
+    )
 
 with col3:
-    st.metric("Assistant", "Online")
-
+    st.metric(
+        "Assistant",
+        "Online"
+    )
 
 st.divider()
 
 
-# Ask ScholarMind
+# =========================================================
+# ASK SCHOLARMIND
+# =========================================================
+
 st.markdown("### 🔎 Ask ScholarMind")
 
 question = st.text_area(
     "Ask a research question",
-    placeholder="Example: What are the main methodologies used in these research papers?",
+    placeholder=(
+        "Example: What are the main methodologies "
+        "used in these research papers?"
+    ),
     height=120
 )
 
+
+# =========================================================
+# ASK BUTTON
+# =========================================================
 
 if st.button("Ask ScholarMind", type="primary"):
 
@@ -89,7 +131,9 @@ if st.button("Ask ScholarMind", type="primary"):
 
     else:
 
-        with st.spinner("ScholarMind is analyzing the research..."):
+        with st.spinner(
+            "ScholarMind is analyzing the research knowledge..."
+        ):
 
             try:
 
@@ -100,66 +144,210 @@ if st.button("Ask ScholarMind", type="primary"):
 
                 st.markdown("### 💡 ScholarMind Answer")
 
-                if isinstance(result, dict):
+                # -------------------------------------------------
+                # Determine question type
+                # -------------------------------------------------
 
-                    answer = result.get(
-                        "answer",
-                        result
+                question_lower = question.lower()
+
+                if "dataset" in question_lower or "data" in question_lower:
+
+                    display_field = "dataset"
+                    display_label = "Dataset"
+
+                elif (
+                    "methodology" in question_lower
+                    or "method" in question_lower
+                    or "technique" in question_lower
+                ):
+
+                    display_field = "methodology"
+                    display_label = "Methodology"
+
+                elif (
+                    "finding" in question_lower
+                    or "result" in question_lower
+                    or "conclusion" in question_lower
+                ):
+
+                    display_field = "findings"
+                    display_label = "Findings"
+
+                elif "doi" in question_lower:
+
+                    display_field = "doi"
+                    display_label = "DOI"
+
+                elif (
+                    "author" in question_lower
+                    or "authors" in question_lower
+                ):
+
+                    display_field = "authors"
+                    display_label = "Authors"
+
+                else:
+
+                    display_field = None
+                    display_label = None
+
+
+                # -------------------------------------------------
+                # Extract answer
+                # -------------------------------------------------
+
+                answer = result.get("answer", result)
+
+
+                # -------------------------------------------------
+                # LIST OF PAPERS
+                # -------------------------------------------------
+
+                if isinstance(answer, list):
+
+                    st.write(
+                        f"**{len(answer)} relevant research paper(s) found.**"
                     )
 
-                    if isinstance(answer, list):
+                    for i, paper in enumerate(answer, start=1):
 
-                        if len(answer) == 0:
+                        if not isinstance(paper, dict):
+                            st.write(paper)
+                            continue
 
-                            st.info(
-                                "No relevant research papers were found."
+                        title = paper.get(
+                            "title",
+                            "Untitled Research"
+                        )
+
+                        st.markdown(
+                            f"### 📄 {i}. {title}"
+                        )
+
+                        # DOI
+
+                        if paper.get("doi"):
+
+                            st.write(
+                                f"**DOI:** {paper.get('doi')}"
+                            )
+
+
+                        # Selected information
+
+                        if display_field:
+
+                            value = paper.get(
+                                display_field,
+                                "N/A"
+                            )
+
+                            if isinstance(value, list):
+
+                                value = ", ".join(
+                                    str(item)
+                                    for item in value
+                                )
+
+                            st.write(
+                                f"**{display_label}:** {value}"
                             )
 
                         else:
 
-                            for paper in answer:
+                            # General question:
+                            # show useful research information
 
-                                st.markdown(
-                                    f"#### 📄 {paper.get('title', 'Untitled')}"
-                                )
-
+                            if paper.get("methodology"):
                                 st.write(
-                                    f"**DOI:** {paper.get('doi', 'N/A')}"
+                                    f"**Methodology:** "
+                                    f"{paper.get('methodology')}"
                                 )
 
+                            if paper.get("dataset"):
                                 st.write(
-                                    f"**Methodology:** {paper.get('methodology', 'N/A')}"
+                                    f"**Dataset:** "
+                                    f"{paper.get('dataset')}"
                                 )
 
-                    elif isinstance(answer, dict):
+                            if paper.get("findings"):
+                                st.write(
+                                    f"**Findings:** "
+                                    f"{paper.get('findings')}"
+                                )
+
+                        st.divider()
+
+
+                # -------------------------------------------------
+                # SINGLE PAPER
+                # -------------------------------------------------
+
+                elif isinstance(answer, dict):
+
+                    title = answer.get(
+                        "title",
+                        "Research Paper"
+                    )
+
+                    st.markdown(
+                        f"### 📄 {title}"
+                    )
+
+                    if answer.get("doi"):
 
                         st.write(
-                            f"**Title:** {answer.get('title', 'N/A')}"
+                            f"**DOI:** {answer.get('doi')}"
                         )
 
-                        st.write(
-                            f"**DOI:** {answer.get('doi', 'N/A')}"
+
+                    if display_field:
+
+                        value = answer.get(
+                            display_field,
+                            "N/A"
                         )
 
-                        st.write(
-                            f"**Methodology:** {answer.get('methodology', 'N/A')}"
-                        )
+                        if isinstance(value, list):
+
+                            value = ", ".join(
+                                str(item)
+                                for item in value
+                            )
 
                         st.write(
-                            f"**Dataset:** {answer.get('dataset', 'N/A')}"
-                        )
-
-                        st.write(
-                            f"**Findings:** {answer.get('findings', 'N/A')}"
+                            f"**{display_label}:** {value}"
                         )
 
                     else:
 
-                        st.write(answer)
+                        if answer.get("methodology"):
+                            st.write(
+                                f"**Methodology:** "
+                                f"{answer.get('methodology')}"
+                            )
+
+                        if answer.get("dataset"):
+                            st.write(
+                                f"**Dataset:** "
+                                f"{answer.get('dataset')}"
+                            )
+
+                        if answer.get("findings"):
+                            st.write(
+                                f"**Findings:** "
+                                f"{answer.get('findings')}"
+                            )
+
+
+                # -------------------------------------------------
+                # TEXT ANSWER
+                # -------------------------------------------------
 
                 else:
 
-                    st.write(result)
+                    st.write(answer)
+
 
             except Exception as e:
 
@@ -171,48 +359,73 @@ if st.button("Ask ScholarMind", type="primary"):
 st.divider()
 
 
-# Research Knowledge Base
+# =========================================================
+# RESEARCH KNOWLEDGE BASE
+# =========================================================
+
 with st.expander("📖 View Research Knowledge Base"):
 
     for i, paper in enumerate(papers, start=1):
 
+        if not isinstance(paper, dict):
+            continue
+
         st.markdown(
-            f"### {i}. {paper.get('title', 'Untitled Research')}"
+            f"#### {i}. "
+            f"{paper.get('title', 'Untitled Research')}"
         )
 
         authors = paper.get("authors", [])
 
         if isinstance(authors, list):
-            authors = ", ".join(authors)
-
-        st.write(f"**Authors:** {authors}")
-
-        st.write(
-            f"**Year:** {paper.get('year', 'N/A')}"
-        )
+            authors = ", ".join(
+                str(author) for author in authors
+            )
 
         st.write(
-            f"**DOI:** {paper.get('doi', 'N/A')}"
+            f"**Authors:** {authors}"
         )
 
-        st.write(
-            f"**Abstract:** {paper.get('abstract', 'N/A')}"
-        )
+        if paper.get("year"):
+            st.write(
+                f"**Year:** {paper.get('year')}"
+            )
 
-        st.write(
-            f"**Methodology:** {paper.get('methodology', 'N/A')}"
-        )
+        if paper.get("doi"):
+            st.write(
+                f"**DOI:** {paper.get('doi')}"
+            )
 
-        st.write(
-            f"**Dataset:** {paper.get('dataset', 'N/A')}"
-        )
+        if paper.get("methodology"):
+            st.write(
+                f"**Methodology:** "
+                f"{paper.get('methodology')}"
+            )
 
-        st.write(
-            f"**Findings:** {paper.get('findings', 'N/A')}"
-        )
+        if paper.get("dataset"):
+            st.write(
+                f"**Dataset:** "
+                f"{paper.get('dataset')}"
+            )
+
+        if paper.get("findings"):
+            st.write(
+                f"**Findings:** "
+                f"{paper.get('findings')}"
+            )
+
+        if paper.get("abstract"):
+            st.write(
+                f"**Abstract:** "
+                f"{paper.get('abstract')}"
+            )
 
         st.divider()
 
+
+# =========================================================
+# FOOTER
+# =========================================================
 
 st.caption(
     "ScholarMind — AI Research and Knowledge Management Project"
