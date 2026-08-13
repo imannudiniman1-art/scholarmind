@@ -161,16 +161,7 @@ with st.expander("📖 View Research Knowledge Base"):
 # Footer
 # ---------------------------------------------------------
 
-st.caption(
-    "ScholarMind — AI Research and Knowledge Management Project"
-)
 
-# Page configuration
-st.set_page_config(
-    page_title="ScholarMind",
-    page_icon="🧠",
-    layout="centered"
-)
 
 
 # Header
