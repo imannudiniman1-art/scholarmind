@@ -213,6 +213,30 @@ if st.button("Ask ScholarMind", type="primary"):
                     display_field = None
                     display_label = None
 
+
+# =================================================
+# GET DISPLAY VALUE
+# =================================================
+
+if display_field == "ai_methods":
+
+    ai_methods = paper.get("ai_methods", [])
+
+    if isinstance(ai_methods, list):
+        display_value = ", ".join(
+            str(method) for method in ai_methods
+        )
+    else:
+        display_value = str(ai_methods)
+
+else:
+
+    display_value = paper.get(
+        display_field,
+        "N/A"
+    )
+
+
                 # =================================================
                 # ERROR RESULT
                 # =================================================
