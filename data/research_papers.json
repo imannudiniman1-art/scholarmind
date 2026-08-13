@@ -17,6 +17,13 @@
         "Random Forest",
         "Signal Simulation"
       ],
+
+
+"ai_used": true,
+"ai_methods": [
+    "Random Forest"
+],
+
       "methodology": "Synthetic geophysical signal simulation, statistical feature extraction using mean, standard deviation, and RMS, 70:30 stratified train-test split, optional SMOTE class balancing, and Random Forest classification.",
       "dataset": "500 simulated geophysical signal samples with approximately balanced Low, Medium, and High risk classes.",
       "findings": "The Random Forest model achieved approximately 76% accuracy on the reported testing dataset. The paper also reports accuracy exceeding 85% in balanced scenarios and above 90% in optimized configurations using data balancing techniques.",
