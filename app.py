@@ -102,8 +102,7 @@ if st.button("Ask ScholarMind", type="primary"):
                 result_type = result.get(
                     "type",
                     "unknown"
-                ) 
-                if isinstance(result, dict) else "text" answer = (
+                ) if isinstance(result, dict) else "text" answer = (
                     result.get("answer", result)
                     if isinstance(result, dict)
                     else result
