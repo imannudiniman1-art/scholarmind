@@ -43,6 +43,12 @@
         "Environmental Risk Assessment",
         "Indonesia"
 ],
+
+"ai_used": true,
+
+"ai_methods": [
+    "Artificial Neural Network (ANN)"
+],
       "methodology": "A conceptual and simulation-based framework using MATLAB-generated synthetic environmental data and a supervised artificial neural network (ANN) model. The workflow includes synthetic data generation, data normalization, ANN training and validation, and performance evaluation using mean squared error (MSE).",
       "dataset": "Simulated environmental data generated using MATLAB, representing remote Indonesian environmental conditions. Variables include surface temperature variation, atmospheric CO2 concentration, energy consumption patterns, and renewable energy availability indicators.",
       "findings": "The ANN model effectively captures nonlinear relationships among environmental variables and achieves low prediction error in the simulation. The results indicate the feasibility and scalability of AI-driven environmental risk assessment using satellite-derived environmental indicators under simulated conditions.",
