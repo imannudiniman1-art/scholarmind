@@ -85,15 +85,39 @@ if st.button("Ask ScholarMind", type="primary"):
 
     else:
 
-        with st.spinner(
-            "ScholarMind is analyzing the research knowledge..."
-        ):
-                result = unified_assistant(
-                    papers,
-                    question
-                )
 
-                st.markdown("## 💡 ScholarMind Answer")
+with st.spinner("ScholarMind is analyzing the research knowledge..."):
+
+    try:
+        result = unified_assistant(
+            papers,
+            question
+        )
+
+        st.markdown("## 💡 ScholarMind Answer")
+
+        # RESULT TYPE
+        if isinstance(result, dict):
+            result_type = result.get(
+                "type",
+                "unknown"
+            )
+        else:
+            result_type = "text"
+
+        # EXTRACT ANSWER
+        if isinstance(result, dict):
+            answer = result.get(
+                "answer",
+                result
+            )
+        else:
+            answer = result
+
+    except Exception as e:
+        st.error(f"ScholarMind error: {e}")
+        result_type = "error"
+        answer = str(e)
 
                 # =================================================
                 # RESULT TYPE
