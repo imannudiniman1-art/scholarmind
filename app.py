@@ -77,8 +77,7 @@ question = st.text_area(
 # =========================================================
 # ASK BUTTON
 # =========================================================
-
-    if st.button("Ask ScholarMind", type="primary"):
+if st.button("Ask ScholarMind", type="primary"):
 
     if not question.strip():
 
