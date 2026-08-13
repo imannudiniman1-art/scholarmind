@@ -89,9 +89,6 @@ if st.button("Ask ScholarMind", type="primary"):
         with st.spinner(
             "ScholarMind is analyzing the research knowledge..."
         ):
-
-            try:
-
                 result = unified_assistant(
                     papers,
                     question
