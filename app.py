@@ -217,17 +217,32 @@ if st.button("Ask ScholarMind", type="primary"):
 # =================================================
 # GET DISPLAY VALUE
 # =================================================
-
 if display_field == "ai_methods":
 
-    ai_methods = paper.get("ai_methods", [])
+    ai_methods = paper.get("ai_methods")
 
-    if isinstance(ai_methods, list):
-        display_value = ", ".join(
-            str(method) for method in ai_methods
-        )
+    if ai_methods:
+        if isinstance(ai_methods, list):
+            display_value = ", ".join(
+                str(method) for method in ai_methods
+            )
+        else:
+            display_value = str(ai_methods)
+
     else:
-        display_value = str(ai_methods)
+        # Fallback: ambil AI method dari methodology
+        methodology = paper.get("methodology", "")
+
+        if "random forest" in methodology.lower():
+            display_value = "Random Forest"
+        elif "neural network" in methodology.lower():
+            display_value = "Artificial Neural Network (ANN)"
+        elif "ann" in methodology.lower():
+            display_value = "Artificial Neural Network (ANN)"
+        elif "machine learning" in methodology.lower():
+            display_value = "Machine Learning"
+        else:
+            display_value = "N/A"
 
 else:
 
