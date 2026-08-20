@@ -8,6 +8,39 @@ from pathlib import Path
 
 import streamlit as st
 
+# ============================================================
+# SCHOLARMIND PREMIUM UI
+# ============================================================
+
+st.set_page_config(
+    page_title="ScholarMind | AI Research Assistant",
+    page_icon="🧠",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
+st.markdown("""
+<style>
+
+    /* Main background */
+    .stApp {
+        background: linear-gradient(
+            180deg,
+            #f8fafc 0%,
+            #ffffff 45%,
+            #f8fafc 100%
+        );
+    }
+
+    /* Main content width */
+    .block-container {
+        max-width: 1100px;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+
+    /* Main title */
+    .sch
 
 # =========================================================
 # PATH CONFIGURATION
